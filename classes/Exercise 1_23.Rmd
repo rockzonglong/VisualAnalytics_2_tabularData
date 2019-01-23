@@ -1,0 +1,146 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+link="https://github.com/rockzonglong/VisualAnalytics_2_tabularData/raw/master/data/Tableau%20Applicable%20Annual%20Report%201.csv"
+```
+
+```{r}
+mydata=read.csv(link)
+```
+
+```{r}
+names(mydata)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+```{r}
+table(mydata$Repeat.Donor)
+```
+
+```{r}
+absoluteT=table(mydata$Repeat.Donor)
+prop.table(absoluteT)
+TABLE=prop.table(absoluteT)
+```
+
+```{r}
+percentage=prop.table(absoluteT)
+pie(percentage)
+```
+```{r}
+table(mydata$Repeat.Donor)
+```
+```{r}
+names(table(mydata$Repeat.Donor))[1]="N/A"
+```
+```{r}
+names(TABLE)
+```
+
+```{r}
+names(TABLE)[1]="N/A"
+```
+
+```{r}
+names(TABLE)
+```
+```{r}
+TABLE
+```
+```{r}
+pie(TABLE)
+```
+```{r}
+TABLE=TABLE*100
+```
+
+```{r}
+TABLE
+```
+```{r}
+paste0(round(TABLE,2),'%')
+annotation=paste0(round(TABLE,2),'%')
+```
+
+```{r}
+barplot(TABLE)
+```
+```{r}
+titleText2333='Percentage of Repeat Donors in Friends of WPC Nepal'
+
+
+paomadeng=rainbow(length(TABLE)) 
+
+Position=barplot(TABLE,
+        col=paomadeng,
+        border=NA,
+        xlim=c(0,80),
+        main=titleText2333,
+        xlab = '(in %)',
+        horiz = T,
+        las=2)
+
+text(y=Position,x=TABLE, labels=annotation,
+      pos=4,
+      cex=0.8)
+title(sub=sourceText2444, adj=0,cex.sub=0.7,
+      line = 3) 
+```
+```{r}
+GGtable=as.data.frame(TABLE)
+names(GGtable)=c("Answer","percentage")
+GGtable
+```
+```{r}
+library(ggplot2)
+```
+```{r}
+base= ggplot(data = GGtable, 
+             aes(x = reorder(Answer, percentage),
+                 y = percentage)) 
+```
+
+```{r}
+plot1 = base + geom_bar(fill ="gray",
+                        stat = 'identity')
+plot1
+```
+```{r}
+plot2 = plot1 + labs(title=titleText2333,
+                     x =NULL, 
+                     y = NULL,
+                     caption = sourceText2444)
+plot2
+```
+```{r}
+base1 = ggplot(GGtable, aes(x=Answer,percentage)) 
+lolliplot2333=base1 + geom_segment(aes(y = 0, 
+                                   x = Answer, 
+                                   yend = percentage, 
+                                   xend = Answer), color = "grey50") 
+lolliplot2333 + geom_point()
+```
+```{r}
+GGtable1=GGtable[order(GGtable$percentage),]
+
+
+base = ggplot(GGtable1, aes(Answer,percentage)) 
+lolliplot2333=base + geom_segment(aes(y = 0, 
+                                   x = Answer, 
+                                   yend = percentage, 
+                                   xend = Answer), color = "gray") 
+lolliplot2444 = lolliplot2333 + geom_point()
+lolliplot2444 + scale_x_discrete(limits=GGtable1$Answer)
+```
+
