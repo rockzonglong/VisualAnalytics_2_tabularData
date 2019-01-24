@@ -78,7 +78,7 @@ barplot(TABLE)
 ```
 ```{r}
 titleText2333='Percentage of Repeat Donors in Friends of WPC Nepal'
-
+sourceText2444='Based on Database from DonorPerfect'
 
 paomadeng=rainbow(length(TABLE)) 
 
@@ -121,16 +121,13 @@ plot2 = plot1 + labs(title=titleText2333,
                      x =NULL, 
                      y = NULL,
                      caption = sourceText2444)
-plot2
+plot3 = plot2 + geom_text(aes(y = percentage ,
+                            label = paste0(round(percentage,2), '%')),
+                        vjust=1,
+                        size = 3)
+plot3
 ```
-```{r}
-base1 = ggplot(GGtable, aes(x=Answer,percentage)) 
-lolliplot2333=base1 + geom_segment(aes(y = 0, 
-                                   x = Answer, 
-                                   yend = percentage, 
-                                   xend = Answer), color = "grey50") 
-lolliplot2333 + geom_point()
-```
+
 ```{r}
 GGtable1=GGtable[order(GGtable$percentage),]
 
@@ -143,4 +140,6 @@ lolliplot2333=base + geom_segment(aes(y = 0,
 lolliplot2444 = lolliplot2333 + geom_point()
 lolliplot2444 + scale_x_discrete(limits=GGtable1$Answer)
 ```
+
+
 
