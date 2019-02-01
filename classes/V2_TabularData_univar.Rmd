@@ -745,7 +745,8 @@ The x-values in this variable have **order**. That is, there is an increasing le
 Bar plots help you see concentration and symmetry, but we have an alternative way to clearly detect symmetry, via **boxplots**:
 
 ```{r boxplot_gg, eval=FALSE}
-# boxplots do not use frequency tables
+# boxplots do not use frequency tables. The middle two box each represents the 25% left to the midian sample and 25% right to the median sample. The left area to the box means the bottom 25% 
+# The y-axes means nothing here, only th4e distance of the x-axes mean the acutal percentage
 
 # as.numeric produces turns levels of the factor into numbers
 box1 = ggplot(eduwa, aes(y=as.numeric(High.Grade))) 
@@ -946,9 +947,8 @@ Now let me plot a histogram of those means:
 
 ```{r histMeans, eval=FALSE}
 # keeping strategy 2: 
-meanValues=tapply(eduwa4$Student.Teacher.Ratio, 
-                  eduwa4$County, 
-                  mean)
+meanValues=tapply(eduwa$Student.Teacher.Ratio, eduwa$County, mean,na.rm=T)
+
 hist(meanValues)
 ```
 
